@@ -13,12 +13,9 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 export default function ProfileScreen({ navigation, route }) {
-  const initialName = route?.params?.userName || 'muhammmad ramdani saputra';
-  const [nama] = useState(
-    initialName === 'putra' ? 'muhammad ramdani saputra' : initialName
-  );
-  const nim = '4112755201250084';
-  const prodi = 'S1 Informatika';
+  const nama = 'Ibnu Darma Maulana';
+  const nim = '43E57027205006';
+  const prodi = 'S1 Sistem Informasi';
 
   // State untuk modal konfirmasi logout
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -43,7 +40,7 @@ export default function ProfileScreen({ navigation, route }) {
     <View style={styles.screen}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
 
-      {/* Top Header persis seperti gambar */}
+      {/* Top Header persis seperti Foto 3 */}
       <View style={styles.headerRow}>
         <View>
           <Text style={styles.headerTitle}>My Profile</Text>
@@ -51,6 +48,7 @@ export default function ProfileScreen({ navigation, route }) {
         </View>
         <TouchableOpacity
           style={styles.settingsCircle}
+          activeOpacity={0.7}
           onPress={() => setShowLogoutModal(true)}
         >
           <Ionicons name="settings-sharp" size={20} color="#64748b" />
@@ -61,9 +59,9 @@ export default function ProfileScreen({ navigation, route }) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* Card Profil Utama persis seperti gambar */}
+        {/* Card Profil Utama persis seperti Foto 3 */}
         <View style={styles.profileCard}>
-          {/* Avatar Lingkaran dengan border biru tebal & foto dari asset */}
+          {/* Avatar Lingkaran dengan border biru tebal & foto Ibnu */}
           <View style={styles.avatarWrapper}>
             <Image
               source={require('../assets/profile.jpg')}
@@ -94,18 +92,18 @@ export default function ProfileScreen({ navigation, route }) {
           </View>
         </View>
 
-        {/* Tombol Logout Fungsional */}
+        {/* Tombol Logout Merah/Coral persis seperti Foto 3 */}
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={() => setShowLogoutModal(true)}
           activeOpacity={0.85}
         >
-          <Ionicons name="log-out-outline" size={20} color="#ffffff" />
+          <Ionicons name="exit-outline" size={20} color="#ffffff" style={styles.logoutIcon} />
           <Text style={styles.logoutButtonText}>Keluar Akun (Logout)</Text>
         </TouchableOpacity>
       </ScrollView>
 
-      {/* Modal Dialog Konfirmasi Logout (Bekerja lancar di Web, Android, dan iOS) */}
+      {/* Modal Dialog Konfirmasi Logout persis seperti Foto 4 */}
       <Modal
         visible={showLogoutModal}
         transparent={true}
@@ -115,7 +113,7 @@ export default function ProfileScreen({ navigation, route }) {
         <View style={styles.modalOverlay}>
           <View style={styles.confirmCard}>
             <View style={styles.modalIconBox}>
-              <Ionicons name="alert-circle-outline" size={38} color="#ef4444" />
+              <Ionicons name="alert-circle-outline" size={42} color="#ef4444" />
             </View>
             <Text style={styles.confirmTitle}>Konfirmasi Logout</Text>
             <Text style={styles.confirmDesc}>
@@ -126,15 +124,17 @@ export default function ProfileScreen({ navigation, route }) {
               <TouchableOpacity
                 style={styles.cancelBtn}
                 onPress={() => setShowLogoutModal(false)}
+                activeOpacity={0.7}
               >
                 <Text style={styles.cancelBtnText}>Batal</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={styles.exitBtn}
+                style={styles.confirmBtn}
                 onPress={performLogout}
+                activeOpacity={0.85}
               >
-                <Text style={styles.exitBtnText}>Ya, Keluar</Text>
+                <Text style={styles.confirmBtnText}>Ya, Keluar</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -177,79 +177,80 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: 20,
-    paddingTop: 12,
-    paddingBottom: 30,
+    paddingBottom: 24,
   },
   profileCard: {
     backgroundColor: '#ffffff',
     borderRadius: 22,
-    paddingVertical: 28,
-    paddingHorizontal: 20,
+    padding: 24,
+    marginTop: 10,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#f1f5f9',
+    borderColor: '#edf2f7',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.08,
-    shadowRadius: 10,
+    shadowRadius: 8,
     elevation: 3,
   },
   avatarWrapper: {
-    width: 116,
-    height: 116,
-    borderRadius: 58,
+    width: 110,
+    height: 110,
+    borderRadius: 55,
     borderWidth: 3.5,
-    borderColor: '#1e6fe9',
+    borderColor: '#2563eb', // Border biru terang Foto 3
     justifyContent: 'center',
     alignItems: 'center',
+    overflow: 'hidden',
+    backgroundColor: '#f1f5f9',
     marginBottom: 16,
   },
   avatarImage: {
-    width: 104,
-    height: 104,
-    borderRadius: 52,
+    width: '100%',
+    height: '100%',
   },
   nameText: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#0f172a',
-    marginBottom: 18,
+    marginBottom: 20,
     textAlign: 'center',
   },
   infoBox: {
     width: '100%',
     backgroundColor: '#f8fafc',
-    borderRadius: 12,
+    borderRadius: 14,
+    paddingVertical: 14,
     paddingHorizontal: 16,
-    paddingVertical: 12,
     marginBottom: 12,
-    borderWidth: 1,
-    borderColor: '#f1f5f9',
   },
   infoLabel: {
     fontSize: 11,
-    color: '#94a3b8',
+    color: '#64748b',
+    fontWeight: '500',
     marginBottom: 4,
   },
   infoValue: {
     fontSize: 15,
     fontWeight: 'bold',
-    color: '#1e293b',
+    color: '#0f172a',
   },
   logoutButton: {
-    marginTop: 22,
-    backgroundColor: '#ef4444',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 14,
+    backgroundColor: '#ef4444', // Warna merah/coral Foto 3
     borderRadius: 14,
-    gap: 8,
+    paddingVertical: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
     shadowColor: '#ef4444',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.25,
-    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
     elevation: 3,
+  },
+  logoutIcon: {
+    marginRight: 8,
   },
   logoutButtonText: {
     color: '#ffffff',
@@ -267,36 +268,37 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 340,
     backgroundColor: '#ffffff',
-    borderRadius: 20,
+    borderRadius: 22,
     padding: 24,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 8,
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 6,
   },
   modalIconBox: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 68,
+    height: 68,
+    borderRadius: 34,
     backgroundColor: '#fee2e2',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 14,
+    marginBottom: 16,
   },
   confirmTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#0f172a',
-    marginBottom: 8,
+    marginBottom: 10,
+    textAlign: 'center',
   },
   confirmDesc: {
     fontSize: 13,
     color: '#64748b',
     textAlign: 'center',
     lineHeight: 19,
-    marginBottom: 20,
+    marginBottom: 22,
   },
   confirmButtonRow: {
     flexDirection: 'row',
@@ -305,26 +307,26 @@ const styles = StyleSheet.create({
   },
   cancelBtn: {
     flex: 1,
-    paddingVertical: 12,
-    borderRadius: 10,
     backgroundColor: '#f1f5f9',
+    paddingVertical: 13,
+    borderRadius: 12,
     alignItems: 'center',
   },
   cancelBtnText: {
-    fontSize: 14,
-    fontWeight: '600',
     color: '#475569',
+    fontWeight: '600',
+    fontSize: 14,
   },
-  exitBtn: {
+  confirmBtn: {
     flex: 1,
-    paddingVertical: 12,
-    borderRadius: 10,
     backgroundColor: '#ef4444',
+    paddingVertical: 13,
+    borderRadius: 12,
     alignItems: 'center',
   },
-  exitBtnText: {
-    fontSize: 14,
-    fontWeight: 'bold',
+  confirmBtnText: {
     color: '#ffffff',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
 });

@@ -26,11 +26,11 @@ export default function LoginScreen({ navigation }) {
   const handleLogin = () => {
     const trimmedEmail = email.trim();
     if (!trimmedEmail || !password) {
-      Alert.alert('Peringatan', 'Input Email dan Input Password wajib diisi!');
+      Alert.alert('Peringatan', 'Email dan password harus diisi!');
       return;
     }
     if (!validateEmail(trimmedEmail)) {
-      Alert.alert('Peringatan', 'Format email tidak valid! Contoh: nama@gmail.com');
+      Alert.alert('Peringatan', 'Format email tidak valid! Contoh: user@gmail.com');
       return;
     }
     if (password.length < 6) {
@@ -38,18 +38,21 @@ export default function LoginScreen({ navigation }) {
       return;
     }
 
-    // Nama default mahasiswa sesuai profil
-    const displayName = 'Muhammad Ramdani Saputra';
+    // Default nama Ibnu sesuai tampilan referensi
+    let displayName = 'Ibnu';
+    if (trimmedEmail.toLowerCase().includes('ibnu')) {
+      displayName = 'Ibnu';
+    }
 
-    // Berhasil login: Navigasi langsung ke HomeScreen sesuai sketsa UTS
-    navigation.replace('Home', {
+    // Navigasi ke MainTab (Home + Profile)
+    navigation.replace('MainTab', {
       userEmail: trimmedEmail,
       userName: displayName,
     });
   };
 
   const handleQuickFill = () => {
-    setEmail('muhammad.ramdani@mahasiswa.ac.id');
+    setEmail('ibnu.darma@mahasiswa.ac.id');
     setPassword('123456');
   };
 
@@ -61,17 +64,14 @@ export default function LoginScreen({ navigation }) {
       <StatusBar barStyle="light-content" backgroundColor="#1e90ff" />
 
       <View style={styles.content}>
-        {/* Judul sesuai layout sketsa Foto 3 dengan font & warna putih Foto 1 */}
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleMain}>MY APP VIVI</Text>
-          <Text style={styles.titleSub}>UTS MOBILE 1</Text>
-        </View>
+        {/* Title persis seperti Foto 1 */}
+        <Text style={styles.title}>Welcome Back!</Text>
 
-        {/* INPUT EMAIL */}
+        {/* Input Email */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="INPUT EMAIL"
+            placeholder="Email"
             placeholderTextColor="#888888"
             keyboardType="email-address"
             autoCapitalize="none"
@@ -80,11 +80,11 @@ export default function LoginScreen({ navigation }) {
           />
         </View>
 
-        {/* INPUT PASSWORD */}
+        {/* Input Password */}
         <View style={styles.passwordWrapper}>
           <TextInput
             style={styles.passwordInput}
-            placeholder="INPUT PASSWORD"
+            placeholder="Password"
             placeholderTextColor="#888888"
             secureTextEntry={!showPassword}
             value={password}
@@ -102,13 +102,13 @@ export default function LoginScreen({ navigation }) {
           </Pressable>
         </View>
 
-        {/* TOMBOL LOGIN */}
+        {/* Tombol Login persis seperti Foto 1 */}
         <TouchableOpacity
           style={styles.button}
           onPress={handleLogin}
           activeOpacity={0.85}
         >
-          <Text style={styles.buttonText}>TOMBOL LOGIN</Text>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         {/* Shortcut isi cepat untuk kemudahan demo */}
@@ -127,7 +127,7 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1e90ff', // Warna biru Foto 1
+    backgroundColor: '#1e90ff', // Warna biru cerah Foto 1
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
@@ -137,23 +137,11 @@ const styles = StyleSheet.create({
     maxWidth: 380,
     alignItems: 'center',
   },
-  titleContainer: {
-    alignItems: 'center',
-    marginBottom: 44,
-  },
-  titleMain: {
+  title: {
     fontSize: 32,
     color: '#ffffff',
     fontWeight: 'bold',
-    letterSpacing: 1.5,
-    textAlign: 'center',
-  },
-  titleSub: {
-    fontSize: 22,
-    color: '#ffffff',
-    fontWeight: '700',
-    marginTop: 6,
-    letterSpacing: 1,
+    marginBottom: 44,
     textAlign: 'center',
   },
   inputContainer: {
@@ -217,7 +205,6 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 17,
     fontWeight: 'bold',
-    letterSpacing: 1,
   },
   quickFillLink: {
     marginTop: 24,
