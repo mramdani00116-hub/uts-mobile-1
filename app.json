@@ -15,10 +15,19 @@
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
-      }
+      },
+      "package": "com.mountsea.myprofilevivi"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "35477428-35b6-40e0-9233-795614cf87e4"
+      }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

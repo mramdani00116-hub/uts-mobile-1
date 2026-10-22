@@ -63,7 +63,7 @@ export default function LoginScreen({ navigation }) {
       <View style={styles.content}>
         {/* Judul sesuai layout sketsa Foto 3 dengan font & warna putih Foto 1 */}
         <View style={styles.titleContainer}>
-          <Text style={styles.titleMain}>MY APP vivi</Text>
+          <Text style={styles.titleMain}>MY APP VIVI</Text>
           <Text style={styles.titleSub}>UTS MOBILE 1</Text>
         </View>
 

@@ -4,7 +4,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// Import Screens sesuai struktur UTS Mobile 1
+// Import Screens
 import LoginScreen from './screens/Login';
 import HomeScreen from './screens/Home';
 import ProfileScreen from './screens/Profile';
@@ -31,3 +31,5 @@ export default function App() {
     </SafeAreaProvider>
   );
 }
+
+

@@ -76,7 +76,7 @@ export default function HomeScreen({ route, navigation }) {
       >
         {/* Header HOME PAGE sesuai sketsa Foto 3 */}
         <View style={styles.headerContainer}>
-          <Text style={styles.headerTitle}>HOME PAGE</Text>
+          <Text style={styles.headerTitle}>HOMEPAGE</Text>
         </View>
 
         {/* KOTAK BESAR (PROFIL) sesuai sketsa Foto 3: Berisi Foto Profil & Nama Kamu */}
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   headerTitle: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#0f172a',
     letterSpacing: 1.2,
