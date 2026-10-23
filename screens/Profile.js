@@ -13,9 +13,9 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 export default function ProfileScreen({ navigation, route }) {
-  const nama = 'Ibnu Darma Maulana';
-  const nim = '43E57027205006';
-  const prodi = 'S1 Sistem Informasi';
+  const nama = 'muhammad ramdani saputra';
+  const nim = '4112755201250084';
+  const prodi = 'S1 informatika';
 
   // State untuk modal konfirmasi logout
   const [showLogoutModal, setShowLogoutModal] = useState(false);
