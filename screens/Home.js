@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
@@ -13,16 +14,18 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 export default function HomeScreen({ route, navigation }) {
-  const userName = route?.params?.userName || 'Ibnu';
+  const userName = route?.params?.userName || 'Muhammad Ramdani Saputra';
+  const nim = '4112755201250084';
+  const prodi = 'S1 Informatika';
 
-  // State interaktif modal
-  const [activeModal, setActiveModal] = useState(null); // 'tugas' | 'jadwal' | 'absensi' | 'pengumuman'
+  // State interaktif modal detail setiap Menu
+  const [activeModal, setActiveModal] = useState(null); // 'menu1' | 'menu2' | 'menu3' | 'menu4'
 
-  // Data interaktif Tugas
+  // Data interaktif Menu 1 (Tugas)
   const [tasks, setTasks] = useState([
     { id: '1', title: 'Tugas Mobile Programming Pertemuan 6', done: false },
     { id: '2', title: 'Laporan Praktikum Basis Data', done: false },
-    { id: '3', title: 'Desain Wireframe UI Mahasiswa', done: false },
+    { id: '3', title: 'Desain Wireframe UI UTS Mobile 1', done: true },
   ]);
 
   const toggleTask = (id) => {
@@ -33,32 +36,33 @@ export default function HomeScreen({ route, navigation }) {
 
   const pendingTasksCount = tasks.filter((t) => !t.done).length;
 
-  // Data Jadwal
+  // Data Menu 2 (Jadwal)
   const schedules = [
     { id: '1', matkul: 'Pemrograman Mobile 1', jam: '08:00 - 10:30', ruang: 'Lab Komputer 3' },
     { id: '2', matkul: 'Interaksi Manusia & Komputer', jam: '13:00 - 15:30', ruang: 'R. 204' },
   ];
 
-  // Data Absensi
+  // Data Menu 3 (Absensi)
   const [hadirHariIni, setHadirHariIni] = useState(false);
 
-  // Data Pengumuman
+  // Data Menu 4 (Pengumuman)
   const announcements = [
-    { id: '1', title: 'Jadwal KRS Semester Ganjil 2026/2027 telah dibuka' },
-    { id: '2', title: 'Kuliah Umum Mobile App Development via Zoom' },
+    { id: '1', title: 'Ujian Tengah Semester (UTS) Mobile 1 Berlangsung' },
+    { id: '2', title: 'Pengumpulan Project Wireframe & Prototype Mahasiswa' },
   ];
 
-  const handleLogoutConfirm = () => {
-    const rootNav = navigation.getParent() || navigation;
-    if (rootNav?.reset) {
-      rootNav.reset({
+  // Tombol Logout: langsung kembali ke Login
+  const handleLogout = () => {
+    const nav = navigation.getParent() || navigation;
+    if (nav?.reset) {
+      nav.reset({
         index: 0,
         routes: [{ name: 'Login' }],
       });
-    } else if (rootNav?.replace) {
-      rootNav.replace('Login');
+    } else if (nav?.replace) {
+      nav.replace('Login');
     } else {
-      rootNav.navigate('Login');
+      nav.navigate('Login');
     }
   };
 
@@ -66,99 +70,103 @@ export default function HomeScreen({ route, navigation }) {
     <View style={styles.screen}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
 
-      {/* Top Header persis seperti Foto 2 */}
-      <View style={styles.headerRow}>
-        <Text style={styles.headerTitle}>Home Page</Text>
-        <TouchableOpacity
-          style={styles.settingsCircle}
-          activeOpacity={0.7}
-          onPress={() => {
-            Alert.alert(
-              'Menu Pengaturan',
-              'Pilih opsi yang ingin dilakukan:',
-              [
-                { text: 'Batal', style: 'cancel' },
-                {
-                  text: 'Buka Profil',
-                  onPress: () => navigation.navigate('Profile'),
-                },
-                {
-                  text: 'Keluar Akun (Logout)',
-                  style: 'destructive',
-                  onPress: handleLogoutConfirm,
-                },
-              ]
-            );
-          }}
-        >
-          <Ionicons name="settings-sharp" size={20} color="#64748b" />
-        </TouchableOpacity>
-      </View>
-
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* Banner Biru (Hallo, Ibnu) persis seperti Foto 2 */}
-        <View style={styles.blueBanner}>
-          <Text style={styles.greetingTitle}>Hallo, {userName}</Text>
-          <Text style={styles.greetingMessage}>
-            Selamat datang di aplikasi mahasiswa. Semoga aktivitas kuliahmu hari ini berjalan lancar.
-          </Text>
+        {/* Header HOME PAGE sesuai sketsa Gambar 1 */}
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerTitle}>HOME PAGE</Text>
         </View>
 
-        {/* Section Heading "Aktivitas" */}
-        <Text style={styles.sectionTitle}>Aktivitas</Text>
+        {/* KOTAK BESAR (Menggantikan banner Hallo Muhammad menjadi Foto Profil Mahasiswa) */}
+        <View style={styles.profileBox}>
+          {/* FOTO PROFIL */}
+          <View style={styles.photoWrapper}>
+            <Image
+              source={require('../assets/profile.jpg')}
+              style={styles.profilePhoto}
+              resizeMode="cover"
+            />
+          </View>
 
-        {/* 2x2 Grid Cards persis seperti Foto 2 */}
-        <View style={styles.grid}>
-          {/* Card Tugas */}
+          {/* NAMA KAMU */}
+          <Text style={styles.userNameText}>{userName}</Text>
+          <Text style={styles.nimText}>NIM: {nim}</Text>
+          <Text style={styles.prodiText}>{prodi}</Text>
+        </View>
+
+        {/* 4 KOTAK MENU DALAM GRID 2x2 sesuai sketsa Gambar 1 */}
+        <View style={styles.menuGrid}>
+          {/* MENU 1 */}
           <TouchableOpacity
-            style={styles.card}
+            style={styles.menuCard}
             activeOpacity={0.8}
-            onPress={() => setActiveModal('tugas')}
+            onPress={() => setActiveModal('menu1')}
           >
-            <Text style={styles.cardTitle}>Tugas</Text>
-            <Text style={styles.cardNumber}>{pendingTasksCount}</Text>
-            <Text style={styles.cardSub}>Tugas belum selesai</Text>
+            <View style={styles.menuHeaderRow}>
+              <Text style={styles.menuCode}>MENU 1</Text>
+              <Ionicons name="document-text-outline" size={20} color="#1e90ff" />
+            </View>
+            <Text style={styles.menuValue}>{pendingTasksCount}</Text>
+            <Text style={styles.menuDesc}>Tugas belum selesai</Text>
           </TouchableOpacity>
 
-          {/* Card Jadwal */}
+          {/* MENU 2 */}
           <TouchableOpacity
-            style={styles.card}
+            style={styles.menuCard}
             activeOpacity={0.8}
-            onPress={() => setActiveModal('jadwal')}
+            onPress={() => setActiveModal('menu2')}
           >
-            <Text style={styles.cardTitle}>Jadwal</Text>
-            <Text style={styles.cardNumber}>2</Text>
-            <Text style={styles.cardSub}>Mata Kuliah hari ini</Text>
+            <View style={styles.menuHeaderRow}>
+              <Text style={styles.menuCode}>MENU 2</Text>
+              <Ionicons name="calendar-outline" size={20} color="#1e90ff" />
+            </View>
+            <Text style={styles.menuValue}>2</Text>
+            <Text style={styles.menuDesc}>Mata Kuliah hari ini</Text>
           </TouchableOpacity>
 
-          {/* Card Absensi */}
+          {/* MENU 3 */}
           <TouchableOpacity
-            style={styles.card}
+            style={styles.menuCard}
             activeOpacity={0.8}
-            onPress={() => setActiveModal('absensi')}
+            onPress={() => setActiveModal('menu3')}
           >
-            <Text style={styles.cardTitle}>Absensi</Text>
-            <Text style={styles.cardNumber}>{hadirHariIni ? '100%' : '97%'}</Text>
-            <Text style={styles.cardSub}>semua mata kuliah</Text>
+            <View style={styles.menuHeaderRow}>
+              <Text style={styles.menuCode}>MENU 3</Text>
+              <Ionicons name="checkmark-circle-outline" size={20} color="#1e90ff" />
+            </View>
+            <Text style={styles.menuValue}>{hadirHariIni ? '100%' : '97%'}</Text>
+            <Text style={styles.menuDesc}>Semua mata kuliah</Text>
           </TouchableOpacity>
 
-          {/* Card Pengumuman */}
+          {/* MENU 4 */}
           <TouchableOpacity
-            style={styles.card}
+            style={styles.menuCard}
             activeOpacity={0.8}
-            onPress={() => setActiveModal('pengumuman')}
+            onPress={() => setActiveModal('menu4')}
           >
-            <Text style={styles.cardTitle}>Pengumuman</Text>
-            <Text style={styles.cardNumber}>2</Text>
-            <Text style={styles.cardSub}>Pengumuman baru</Text>
+            <View style={styles.menuHeaderRow}>
+              <Text style={styles.menuCode}>MENU 4</Text>
+              <Ionicons name="notifications-outline" size={20} color="#1e90ff" />
+            </View>
+            <Text style={styles.menuValue}>2</Text>
+            <Text style={styles.menuDesc}>Pengumuman baru</Text>
           </TouchableOpacity>
         </View>
+
+        {/* TOMBOL LOGOUT sesuai sketsa Gambar 1 dengan warna Gambar 2 */}
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleLogout}
+          activeOpacity={0.85}
+        >
+          <Ionicons name="log-out-outline" size={20} color="#ffffff" style={styles.logoutIcon} />
+          <Text style={styles.logoutText}>TOMBOL LOGOUT</Text>
+        </TouchableOpacity>
       </ScrollView>
 
-      {/* Modal Interaktif untuk Aktivitas */}
+      {/* MODAL INTERAKTIF UNTUK SETIAP MENU */}
       <Modal
         visible={activeModal !== null}
         animationType="slide"
@@ -169,18 +177,18 @@ export default function HomeScreen({ route, navigation }) {
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalHeading}>
-                {activeModal === 'tugas' && 'Daftar Tugas Kuliah'}
-                {activeModal === 'jadwal' && 'Jadwal Kuliah Hari Ini'}
-                {activeModal === 'absensi' && 'Status Kehadiran'}
-                {activeModal === 'pengumuman' && 'Pengumuman Baru'}
+                {activeModal === 'menu1' && 'MENU 1 - Daftar Tugas'}
+                {activeModal === 'menu2' && 'MENU 2 - Jadwal Kuliah'}
+                {activeModal === 'menu3' && 'MENU 3 - Presensi Mahasiswa'}
+                {activeModal === 'menu4' && 'MENU 4 - Pengumuman Kampus'}
               </Text>
               <TouchableOpacity onPress={() => setActiveModal(null)}>
                 <Ionicons name="close-circle" size={26} color="#94a3b8" />
               </TouchableOpacity>
             </View>
 
-            {/* Konten Tugas */}
-            {activeModal === 'tugas' && (
+            {/* Konten Menu 1 */}
+            {activeModal === 'menu1' && (
               <View>
                 <Text style={styles.modalHint}>
                   Ketuk untuk menandai tugas telah selesai:
@@ -194,7 +202,7 @@ export default function HomeScreen({ route, navigation }) {
                     <Ionicons
                       name={item.done ? 'checkbox' : 'square-outline'}
                       size={22}
-                      color={item.done ? '#16a34a' : '#2563eb'}
+                      color={item.done ? '#16a34a' : '#1e90ff'}
                     />
                     <Text
                       style={[
@@ -209,8 +217,8 @@ export default function HomeScreen({ route, navigation }) {
               </View>
             )}
 
-            {/* Konten Jadwal */}
-            {activeModal === 'jadwal' && (
+            {/* Konten Menu 2 */}
+            {activeModal === 'menu2' && (
               <View>
                 {schedules.map((item) => (
                   <View key={item.id} style={styles.scheduleRow}>
@@ -223,20 +231,22 @@ export default function HomeScreen({ route, navigation }) {
               </View>
             )}
 
-            {/* Konten Absensi */}
-            {activeModal === 'absensi' && (
+            {/* Konten Menu 3 */}
+            {activeModal === 'menu3' && (
               <View style={{ alignItems: 'center', paddingVertical: 10 }}>
-                <Text style={{ fontSize: 36, fontWeight: 'bold', color: '#2563eb' }}>
+                <Text style={{ fontSize: 36, fontWeight: 'bold', color: '#1e90ff' }}>
                   {hadirHariIni ? '100%' : '97%'}
                 </Text>
                 <Text style={{ color: '#64748b', marginVertical: 8 }}>
-                  {hadirHariIni ? 'Presensi hari ini sudah tercatat!' : 'Presensi kuliah hari ini belum diisi'}
+                  {hadirHariIni
+                    ? 'Presensi hari ini sudah terkonfirmasi!'
+                    : 'Presensi kuliah hari ini belum diisi'}
                 </Text>
                 <TouchableOpacity
                   style={styles.presensiBtn}
                   onPress={() => {
                     setHadirHariIni(true);
-                    Alert.alert('Sukses', 'Presensi hari ini berhasil dikonfirmasi!');
+                    Alert.alert('Sukses', 'Presensi berhasil dikonfirmasi!');
                   }}
                   disabled={hadirHariIni}
                 >
@@ -247,12 +257,12 @@ export default function HomeScreen({ route, navigation }) {
               </View>
             )}
 
-            {/* Konten Pengumuman */}
-            {activeModal === 'pengumuman' && (
+            {/* Konten Menu 4 */}
+            {activeModal === 'menu4' && (
               <View>
                 {announcements.map((item) => (
                   <View key={item.id} style={styles.announcementRow}>
-                    <Ionicons name="notifications-outline" size={18} color="#2563eb" />
+                    <Ionicons name="notifications-outline" size={18} color="#1e90ff" />
                     <Text style={styles.announcementText}>{item.title}</Text>
                   </View>
                 ))}
@@ -277,73 +287,87 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
   },
-  headerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  scrollContent: {
     paddingHorizontal: 22,
-    paddingTop: 18,
-    paddingBottom: 14,
+    paddingTop: 36,
+    paddingBottom: 40,
+  },
+  headerContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
   },
   headerTitle: {
     fontSize: 22,
     fontWeight: 'bold',
     color: '#0f172a',
+    letterSpacing: 1.2,
   },
-  settingsCircle: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    backgroundColor: '#e2e8f0',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  scrollContent: {
-    paddingHorizontal: 20,
-    paddingBottom: 24,
-  },
-  blueBanner: {
-    backgroundColor: '#2563eb', // Biru royal Foto 2
+  profileBox: {
+    backgroundColor: '#ffffff',
+    borderWidth: 1.5,
+    borderColor: '#e2e8f0',
     borderRadius: 18,
-    padding: 20,
-    marginTop: 8,
-    shadowColor: '#2563eb',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
+    paddingVertical: 24,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    marginBottom: 22,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
     shadowRadius: 6,
     elevation: 3,
   },
-  greetingTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    marginBottom: 8,
+  photoWrapper: {
+    width: 104,
+    height: 104,
+    borderRadius: 20,
+    borderWidth: 3,
+    borderColor: '#1e90ff', // Warna aksen biru Gambar 2
+    padding: 3,
+    backgroundColor: '#ffffff',
+    marginBottom: 14,
+    shadowColor: '#1e90ff',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  greetingMessage: {
-    fontSize: 13,
-    color: '#ffffff',
-    lineHeight: 18,
-    opacity: 0.95,
+  profilePhoto: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 15,
   },
-  sectionTitle: {
+  userNameText: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#0f172a',
-    marginTop: 26,
-    marginBottom: 16,
+    textAlign: 'center',
+    marginBottom: 4,
   },
-  grid: {
+  nimText: {
+    fontSize: 13,
+    color: '#64748b',
+    fontWeight: '600',
+    marginBottom: 2,
+  },
+  prodiText: {
+    fontSize: 12,
+    color: '#94a3b8',
+    fontWeight: '500',
+  },
+  menuGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    gap: 14,
+    rowGap: 14,
+    marginBottom: 28,
   },
-  card: {
-    width: '47.5%',
+  menuCard: {
+    width: '48%',
     backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 16,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: '#edf2f7',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -351,21 +375,49 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 2,
   },
-  cardTitle: {
-    fontSize: 14,
-    color: '#334155',
-    fontWeight: '500',
-    marginBottom: 6,
+  menuHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
   },
-  cardNumber: {
+  menuCode: {
+    fontSize: 14,
+    color: '#0f172a',
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
+  },
+  menuValue: {
     fontSize: 26,
     fontWeight: 'bold',
-    color: '#2563eb',
-    marginBottom: 6,
+    color: '#1e90ff', // Warna biru angka Gambar 2
+    marginBottom: 4,
   },
-  cardSub: {
+  menuDesc: {
     fontSize: 11,
     color: '#64748b',
+  },
+  logoutButton: {
+    backgroundColor: '#ff6347', // Warna tombol orange Gambar 2
+    borderRadius: 12,
+    paddingVertical: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  logoutIcon: {
+    marginRight: 8,
+  },
+  logoutText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    letterSpacing: 1,
   },
   modalOverlay: {
     flex: 1,
@@ -433,7 +485,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   presensiBtn: {
-    backgroundColor: '#2563eb',
+    backgroundColor: '#1e90ff',
     paddingVertical: 12,
     paddingHorizontal: 22,
     borderRadius: 10,

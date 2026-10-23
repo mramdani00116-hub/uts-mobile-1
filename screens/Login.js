@@ -26,11 +26,11 @@ export default function LoginScreen({ navigation }) {
   const handleLogin = () => {
     const trimmedEmail = email.trim();
     if (!trimmedEmail || !password) {
-      Alert.alert('Peringatan', 'Email dan password harus diisi!');
+      Alert.alert('Peringatan', 'Input Email dan Input Password wajib diisi!');
       return;
     }
     if (!validateEmail(trimmedEmail)) {
-      Alert.alert('Peringatan', 'Format email tidak valid! Contoh: user@gmail.com');
+      Alert.alert('Peringatan', 'Format email tidak valid! Contoh: nama@gmail.com');
       return;
     }
     if (password.length < 6) {
@@ -38,21 +38,18 @@ export default function LoginScreen({ navigation }) {
       return;
     }
 
-    // Default nama Ibnu sesuai tampilan referensi
-    let displayName = 'Ibnu';
-    if (trimmedEmail.toLowerCase().includes('ibnu')) {
-      displayName = 'Ibnu';
-    }
+    // Nama default mahasiswa
+    const displayName = 'Muhammad Ramdani Saputra';
 
-    // Navigasi ke MainTab (Home + Profile)
-    navigation.replace('MainTab', {
+    // Berhasil login: Navigasi langsung ke Home Page sesuai sketsa Gambar 1
+    navigation.replace('Home', {
       userEmail: trimmedEmail,
       userName: displayName,
     });
   };
 
   const handleQuickFill = () => {
-    setEmail('ibnu.darma@mahasiswa.ac.id');
+    setEmail('muhammad.ramdani@mahasiswa.ac.id');
     setPassword('123456');
   };
 
@@ -64,14 +61,17 @@ export default function LoginScreen({ navigation }) {
       <StatusBar barStyle="light-content" backgroundColor="#1e90ff" />
 
       <View style={styles.content}>
-        {/* Title persis seperti Foto 1 */}
-        <Text style={styles.title}>Welcome Back!</Text>
+        {/* Judul sesuai layout sketsa Gambar 1 dengan font & warna putih Gambar 2 */}
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleMain}>MY APP</Text>
+          <Text style={styles.titleSub}>UTS MOBILE 1</Text>
+        </View>
 
-        {/* Input Email */}
+        {/* INPUT EMAIL */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder="INPUT EMAIL"
             placeholderTextColor="#888888"
             keyboardType="email-address"
             autoCapitalize="none"
@@ -80,11 +80,11 @@ export default function LoginScreen({ navigation }) {
           />
         </View>
 
-        {/* Input Password */}
+        {/* INPUT PASSWORD */}
         <View style={styles.passwordWrapper}>
           <TextInput
             style={styles.passwordInput}
-            placeholder="Password"
+            placeholder="INPUT PASSWORD"
             placeholderTextColor="#888888"
             secureTextEntry={!showPassword}
             value={password}
@@ -102,16 +102,16 @@ export default function LoginScreen({ navigation }) {
           </Pressable>
         </View>
 
-        {/* Tombol Login persis seperti Foto 1 */}
+        {/* TOMBOL LOGIN */}
         <TouchableOpacity
           style={styles.button}
           onPress={handleLogin}
           activeOpacity={0.85}
         >
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>TOMBOL LOGIN</Text>
         </TouchableOpacity>
 
-        {/* Shortcut isi cepat untuk kemudahan demo */}
+        {/* Shortcut isi cepat untuk kemudahan demo pengujian */}
         <TouchableOpacity
           style={styles.quickFillLink}
           onPress={handleQuickFill}
@@ -127,7 +127,7 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1e90ff', // Warna biru cerah Foto 1
+    backgroundColor: '#1e90ff', // Warna biru cerah Gambar 2
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
@@ -137,11 +137,23 @@ const styles = StyleSheet.create({
     maxWidth: 380,
     alignItems: 'center',
   },
-  title: {
+  titleContainer: {
+    alignItems: 'center',
+    marginBottom: 44,
+  },
+  titleMain: {
     fontSize: 32,
     color: '#ffffff',
     fontWeight: 'bold',
-    marginBottom: 44,
+    letterSpacing: 1.5,
+    textAlign: 'center',
+  },
+  titleSub: {
+    fontSize: 22,
+    color: '#ffffff',
+    fontWeight: '700',
+    marginTop: 6,
+    letterSpacing: 1,
     textAlign: 'center',
   },
   inputContainer: {
@@ -153,7 +165,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     paddingHorizontal: 16,
     paddingVertical: 14,
-    borderRadius: 10,
+    borderRadius: 12,
     fontSize: 15,
     color: '#1e293b',
     fontWeight: '500',
@@ -168,7 +180,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    borderRadius: 10,
+    borderRadius: 12,
     marginBottom: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -190,9 +202,9 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
-    backgroundColor: '#ff6347', // Warna tombol orange/coral Foto 1
+    backgroundColor: '#ff6347', // Warna tombol orange/coral Gambar 2
     paddingVertical: 15,
-    borderRadius: 10,
+    borderRadius: 12,
     alignItems: 'center',
     marginTop: 6,
     shadowColor: '#000',
@@ -205,6 +217,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 17,
     fontWeight: 'bold',
+    letterSpacing: 1,
   },
   quickFillLink: {
     marginTop: 24,
